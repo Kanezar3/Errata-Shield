@@ -4,6 +4,7 @@
 
 `Errata Shield` is a two-gate Intelligent Contract protocol (`ErrataShield`) deployed on GenLayer StudioNet (`Chain ID 61999`) that distinguishes **material scientific retractions or proof invalidations** from **cosmetic typographical corrigenda** and **unrelated/adversarial excerpts** over immutable public archives.
 
+- **Live App:** [`https://errata-shield.vercel.app`](https://errata-shield.vercel.app)
 - **Main Contract (`ErrataShield`)**: [`0x789cC30C52eb51B16B7092B1eaB73d73B15dCA3c`](https://explorer-studio.genlayer.com/address/0x789cC30C52eb51B16B7092B1eaB73d73B15dCA3c)
 - **Probe Contract (`EvidenceProbe`)**: [`0xfCb0Ee3eDcEFDE1f979310602067083bC55Be1Ee`](https://explorer-studio.genlayer.com/address/0xfCb0Ee3eDcEFDE1f979310602067083bC55Be1Ee)
 - **Network**: GenLayer StudioNet (`https://studio.genlayer.com/api`, Chain ID `61999`)

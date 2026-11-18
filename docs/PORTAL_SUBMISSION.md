@@ -21,5 +21,7 @@ Errata Shield is a two-gate Intelligent Contract protocol on GenLayer StudioNet 
 3. **Settle Expiry & Withdraw Escrow:** On **Filing Desk**, use **Escrow Withdrawals & Bond Expiry Settlement** (`settle_expired_bond` / **Withdraw Refundable Balance**) and monitor GenLayer consensus stages in the live transaction tracker.
 
 ## `04` Links
+- **Website (Live App):** `https://errata-shield.vercel.app`
+- **GitHub Repository:** `https://github.com/Kanezar3/Errata-Shield`
 - **Contract Explorer:** `https://explorer-studio.genlayer.com/address/0x789cC30C52eb51B16B7092B1eaB73d73B15dCA3c`
 - **EvidenceProbe Explorer:** `https://explorer-studio.genlayer.com/address/0xfCb0Ee3eDcEFDE1f979310602067083bC55Be1Ee`
