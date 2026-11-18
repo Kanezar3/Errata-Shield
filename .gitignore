@@ -1,0 +1,12 @@
+node_modules/
+frontend/node_modules/
+frontend/dist/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+deploy/seed_state.json
+.secrets.local.json
+.env
+.env.local
+.DS_Store

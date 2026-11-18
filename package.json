@@ -1,0 +1,14 @@
+{
+  "name": "errata-shield",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Retraction-aware scientific and mathematical errata materiality escrow on GenLayer StudioNet.",
+  "scripts": {
+    "test:contracts": "python -m pytest tests/test_errata_shield.py -v",
+    "verify:proof": "python deploy/verify_proof.py",
+    "frontend:dev": "npm --prefix frontend run dev",
+    "frontend:test": "npm --prefix frontend run test",
+    "frontend:lint": "npm --prefix frontend run lint",
+    "frontend:build": "npm --prefix frontend run build"
+  }
+}
