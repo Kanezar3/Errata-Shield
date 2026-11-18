@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { BookMarked, ExternalLink, Shield, Wallet } from 'lucide-react';
+import { BookMarked, ExternalLink, Shield, Wallet, X } from 'lucide-react';
 import type { Address } from 'viem';
 import fallbackProof from './data/proof.json';
 import { ProofInspector } from './components/ProofInspector';
@@ -102,98 +102,117 @@ export function App() {
   const totalCount = String(proof.cases.length).padStart(2, '0');
 
   return (
-    <div className="min-h-screen min-w-0 max-w-full bg-[#F4F6F9] text-[#0F172A]">
-      {/* Deep Navy Swiss Monograph Masthead (scrolls naturally) */}
-      <header className="bg-[#0F172A] text-white">
-        <div className="border-b border-slate-700/80 bg-slate-950/60">
-          <div className="mono mx-auto flex max-w-[1260px] flex-wrap items-center gap-x-3 gap-y-1 px-4 py-1.5 text-[11px] tracking-wider text-slate-300 sm:px-7">
-            <span>NETWORK · STUDIONET {STUDIONET_CHAIN_ID}</span>
-            <span className="text-slate-600">·</span>
+    <div className="min-h-screen min-w-0 max-w-full bg-[#F8FAFC] text-[#0F172A]">
+      {/* Publication Masthead */}
+      <header className="border-b border-[#E2E8F0] bg-white">
+        {/* Subtle Metadata Bar */}
+        <div className="border-b border-[#E2E8F0] bg-[#F8FAFC]">
+          <div className="mono mx-auto flex max-w-[1240px] flex-wrap items-center gap-x-3 gap-y-1 px-4 py-1.5 text-[11px] text-[#64748B] sm:px-7">
+            <span>StudioNet · Chain {STUDIONET_CHAIN_ID}</span>
+            <span className="text-[#CBD5E1]">·</span>
             <span>
-              CONTRACT ·{' '}
+              Contract{' '}
               {activeContractAddress ? (
                 contractExplorer ? (
                   <a
                     href={contractExplorer}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-blue-400 hover:underline"
+                    className="font-medium text-[#1D4ED8] hover:underline"
                   >
                     {shortHash(activeContractAddress, 6, 4)}
                   </a>
                 ) : (
-                  shortHash(activeContractAddress, 6, 4)
+                  <span className="font-medium text-[#0F172A]">
+                    {shortHash(activeContractAddress, 6, 4)}
+                  </span>
                 )
               ) : (
-                'AWAITING DEPLOY'
+                'Awaiting Deploy'
               )}
             </span>
-            <span className="text-slate-600">·</span>
-            <span>CONSENSUS · OPTIMISTIC DEMOCRACY</span>
-            <span className="text-slate-600">·</span>
+            <span className="hidden text-[#CBD5E1] sm:inline">·</span>
+            <span className="hidden sm:inline">Optimistic Democracy</span>
+            <span className="text-[#CBD5E1]">·</span>
             <span>
-              FINALIZED CASES · {finalizedCount} / {totalCount}
+              Finalized {finalizedCount}/{totalCount}
             </span>
           </div>
         </div>
 
-        <div className="mx-auto flex max-w-[1260px] flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-7">
-          <div className="flex items-center gap-3.5">
+        {/* Brand & Controls Row */}
+        <div className="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-7">
+          <div className="flex min-w-0 items-center gap-3.5">
             <img
               src="/logo.png"
               alt="Errata Shield monogram"
-              className="h-10 w-10 rounded-[3px] border border-slate-600 object-cover"
+              className="h-9 w-9 shrink-0 rounded-md border border-[#E2E8F0] object-cover"
             />
-            <div>
-              <h1 className="font-display text-2xl font-bold tracking-tight text-white">
+            <div className="min-w-0">
+              <h1 className="font-display text-xl font-bold tracking-tight text-[#0F172A] sm:text-2xl">
                 Errata Shield
               </h1>
-              <p className="text-xs text-slate-300">
+              <p className="truncate text-xs text-[#475569]">
                 Scientific Peer-Review Bonds &amp; Line-Slice Errata Adjudication
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="flex items-center gap-2 border-b border-slate-600 pb-1 focus-within:border-[#2563EB]">
-              <label htmlFor="contract-addr-input" className="mono text-[11px] text-slate-400">
-                Override
+          <div className="flex flex-wrap items-center gap-2.5">
+            {/* High-Contrast Contract Address Override */}
+            <div className="flex items-center gap-1.5 rounded-md border border-[#CBD5E1] bg-[#F8FAFC] px-2.5 py-1.5 focus-within:border-[#1D4ED8] focus-within:bg-white focus-within:ring-2 focus-within:ring-[#1D4ED8]/15">
+              <label
+                htmlFor="contract-addr-input"
+                className="text-[11px] font-medium text-[#64748B]"
+              >
+                Contract
               </label>
               <input
                 id="contract-addr-input"
                 type="text"
-                className="mono w-44 bg-transparent text-xs text-white placeholder-slate-400 focus:outline-none sm:w-52"
+                className="mono w-36 bg-transparent text-xs text-[#0F172A] placeholder:text-[#64748B] focus:outline-none sm:w-44"
                 value={contractOverride}
                 onChange={(e) => setContractOverride(e.target.value)}
                 placeholder={
                   proof.contract_address
-                    ? shortHash(proof.contract_address, 8, 6)
-                    : '0x… contract address'
+                    ? shortHash(proof.contract_address, 6, 4)
+                    : '0x… address'
                 }
                 aria-label="Contract address override"
               />
+              {contractOverride && (
+                <button
+                  type="button"
+                  onClick={() => setContractOverride('')}
+                  className="rounded p-0.5 text-[#64748B] hover:text-[#0F172A]"
+                  title="Reset to proof.json contract address"
+                  aria-label="Clear contract override"
+                >
+                  <X size={12} />
+                </button>
+              )}
               {contractExplorer && (
                 <a
                   href={contractExplorer}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-blue-400 hover:text-blue-300"
+                  className="text-[#1D4ED8] hover:text-[#1E40AF]"
                   title="View contract on StudioNet Explorer"
                 >
-                  <ExternalLink size={13} />
+                  <ExternalLink size={12} />
                 </a>
               )}
             </div>
 
             {connectedAddress ? (
-              <div className="mono inline-flex items-center gap-2 rounded-[3px] border border-emerald-500/50 bg-emerald-950/60 px-3 py-1.5 text-xs font-semibold text-emerald-300">
-                <span className="h-2 w-2 rounded-full bg-emerald-400" />
+              <div className="mono inline-flex items-center gap-2 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800">
+                <span className="h-2 w-2 rounded-full bg-emerald-500" />
                 <span>{shortHash(connectedAddress, 6, 4)}</span>
               </div>
             ) : (
               <button
                 type="button"
-                className="inline-flex items-center gap-1.5 rounded-[3px] border border-slate-600 bg-slate-800 px-3 py-1.5 text-xs font-semibold text-white hover:bg-slate-700"
+                className="inline-flex items-center gap-1.5 rounded-md bg-[#1D4ED8] px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-[#1E40AF]"
                 onClick={handleConnectWallet}
               >
                 <Wallet size={13} />
@@ -204,56 +223,54 @@ export function App() {
         </div>
       </header>
 
-      {/* Compact Sticky Navigation Bar (<= 44px) */}
+      {/* Compact Sticky Navigation Bar (44px single row) */}
       <nav
-        className="sticky top-0 z-30 border-b border-[#CBD5E1] bg-white"
+        className="sticky top-0 z-30 h-11 border-b border-[#E2E8F0] bg-white/95 backdrop-blur-sm"
         aria-label="Primary views"
       >
-        <div className="mx-auto flex max-w-[1260px] flex-wrap items-center gap-2 px-4 sm:px-7">
+        <div className="mx-auto flex h-full max-w-[1240px] items-center gap-1 px-4 sm:gap-2 sm:px-7">
           <button
             type="button"
-            className={`inline-flex items-center gap-2 border-b-2 px-3 py-2.5 text-xs font-semibold sm:text-sm ${
+            className={`inline-flex h-full items-center gap-1.5 border-b-2 px-2.5 text-xs font-semibold transition-colors sm:px-3 sm:text-sm ${
               activeTab === 'inspector'
-                ? 'border-[#2563EB] text-[#2563EB]'
+                ? 'border-[#1D4ED8] text-[#1D4ED8]'
                 : 'border-transparent text-[#475569] hover:text-[#0F172A]'
             }`}
             onClick={() => setActiveTab('inspector')}
           >
-            <BookMarked size={14} />
-            <span>Proof Dossiers</span>
-            <span className="mono hidden rounded-[2px] border border-[#CBD5E1] px-1.5 py-0.5 text-[10px] text-[#475569] sm:inline">
-              NO WALLET
-            </span>
+            <BookMarked size={14} className="shrink-0" />
+            <span className="whitespace-nowrap">Proof Dossiers</span>
           </button>
 
           <button
             type="button"
-            className={`inline-flex items-center gap-2 border-b-2 px-3 py-2.5 text-xs font-semibold sm:text-sm ${
+            className={`inline-flex h-full items-center gap-1.5 border-b-2 px-2.5 text-xs font-semibold transition-colors sm:px-3 sm:text-sm ${
               activeTab === 'desk'
-                ? 'border-[#2563EB] text-[#2563EB]'
+                ? 'border-[#1D4ED8] text-[#1D4ED8]'
                 : 'border-transparent text-[#475569] hover:text-[#0F172A]'
             }`}
             onClick={() => setActiveTab('desk')}
           >
-            <Shield size={14} />
-            <span>Filing Desk</span>
+            <Shield size={14} className="shrink-0" />
+            <span className="whitespace-nowrap">Filing Desk</span>
           </button>
 
           <a
             href={STUDIONET_EXPLORER_URL}
             target="_blank"
             rel="noreferrer"
-            className="mono ml-auto inline-flex items-center gap-1 py-2 text-xs text-[#475569] hover:text-[#2563EB]"
+            className="ml-auto inline-flex items-center gap-1 whitespace-nowrap text-xs font-medium text-[#64748B] transition-colors hover:text-[#1D4ED8]"
           >
-            <span>StudioNet Explorer</span>
-            <ExternalLink size={12} />
+            <span className="hidden sm:inline">StudioNet Explorer</span>
+            <span className="sm:hidden">Explorer</span>
+            <ExternalLink size={12} className="shrink-0" />
           </a>
         </div>
       </nav>
 
-      <main className="mx-auto flex max-w-[1260px] min-w-0 flex-col gap-6 px-4 py-6 sm:px-7">
+      <main className="mx-auto flex max-w-[1240px] min-w-0 flex-col gap-6 px-4 py-6 sm:px-7">
         {walletError && (
-          <div className="rounded-[3px] border border-red-700/40 bg-red-50 px-3.5 py-2.5 text-sm text-red-900">
+          <div className="rounded-md border border-red-200 border-l-4 border-l-red-600 bg-red-50/70 px-4 py-3 text-sm text-red-900">
             {walletError}
           </div>
         )}
@@ -261,6 +278,7 @@ export function App() {
         {activeTab === 'inspector' ? (
           <ProofInspector
             proof={proof}
+            contractAddress={activeContractAddress}
             liveSnapshot={liveSnapshot}
             liveLoading={liveLoading}
             connectedAddress={connectedAddress}

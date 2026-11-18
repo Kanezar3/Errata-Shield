@@ -1,13 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --canvas: #f4f6f9;
-  --card: #ffffff;
-  --navy: #0f172a;
-  --slate-muted: #475569;
-  --border: #cbd5e1;
-  --cobalt: #2563eb;
-  --cobalt-hover: #1d4ed8;
+  --canvas: #f8fafc;
+  --sheet: #ffffff;
+  --ink: #0f172a;
+  --ink-secondary: #475569;
+  --ink-muted: #64748b;
+  --hairline: #e2e8f0;
+  --hairline-strong: #cbd5e1;
+  --cobalt: #1d4ed8;
+  --cobalt-hover: #1e40af;
   --cobalt-soft: #eff6ff;
   --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
@@ -23,12 +25,13 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--canvas);
-  color: var(--navy);
+  color: var(--ink);
   font-family: var(--font-sans);
   font-size: 15px;
-  line-height: 1.55;
+  line-height: 1.6;
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .font-display {
@@ -38,6 +41,10 @@ body {
 .mono,
 code {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.tabular-nums {
   font-variant-numeric: tabular-nums;
 }
 

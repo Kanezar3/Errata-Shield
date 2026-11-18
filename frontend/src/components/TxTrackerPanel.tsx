@@ -26,27 +26,27 @@ const LIFECYCLE_LABELS: Record<
   submitted: {
     label: 'Submitted',
     step: 1,
-    classes: 'border-amber-700/40 bg-amber-50 text-amber-900',
+    classes: 'border-amber-200 bg-amber-50 text-amber-800',
   },
   pending: {
     label: 'Pending Consensus',
     step: 2,
-    classes: 'border-amber-700/40 bg-amber-50 text-amber-900',
+    classes: 'border-amber-200 bg-amber-50 text-amber-800',
   },
   accepted: {
     label: 'Accepted (5) · Appeal Window',
     step: 3,
-    classes: 'border-blue-700/40 bg-blue-50 text-blue-900',
+    classes: 'border-blue-200 bg-blue-50 text-blue-800',
   },
   'finalized-success': {
     label: 'Finalized (7) · Success',
     step: 4,
-    classes: 'border-emerald-700/40 bg-emerald-50 text-emerald-900',
+    classes: 'border-emerald-200 bg-emerald-50 text-emerald-800',
   },
   'finalized-error': {
-    label: 'Finalized · Error / Canceled',
+    label: 'Finalized · Error',
     step: 4,
-    classes: 'border-red-700/40 bg-red-50 text-red-900',
+    classes: 'border-red-200 bg-red-50 text-red-800',
   },
 };
 
@@ -60,16 +60,16 @@ export function TxTrackerPanel({
   if (transactions.length === 0) {
     return (
       <footer
-        className="flex flex-wrap items-center justify-between gap-2 rounded-[3px] border border-[#CBD5E1] bg-white px-4 py-2.5 text-xs text-[#475569]"
+        className="flex flex-wrap items-center justify-between gap-2 rounded-md border border-[#E2E8F0] bg-white px-5 py-3 text-xs text-[#64748B]"
         aria-label="Transaction queue status"
       >
         <div className="flex items-center gap-2">
-          <Radio size={13} className="text-[#2563EB]" />
-          <span className="mono font-medium text-[#0F172A]">StudioNet Queue</span>
+          <Radio size={13} className="text-[#1D4ED8]" />
+          <span className="font-medium text-[#0F172A]">StudioNet Queue</span>
           <span className="text-[#CBD5E1]">·</span>
           <span>Idle</span>
         </div>
-        <div className="mono text-[11px] text-[#475569]">
+        <div className="mono text-[11px] text-[#64748B]">
           localStorage 7s auto-poll · Resumes across reloads
         </div>
       </footer>
@@ -77,13 +77,11 @@ export function TxTrackerPanel({
   }
 
   return (
-    <section className="min-w-0 max-w-full rounded-[3px] border border-[#CBD5E1] bg-white p-5">
-      <div className="mb-4 flex flex-wrap items-start justify-between gap-3 border-b border-[#CBD5E1] pb-3">
+    <section className="min-w-0 max-w-full rounded-md border border-[#E2E8F0] bg-white">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E2E8F0] px-5 py-4 sm:px-6">
         <div>
-          <p className="mono text-[11px] font-semibold uppercase tracking-wider text-[#475569]">
-            Resumable Lifecycle Tracker
-          </p>
-          <h3 className="font-display text-lg font-semibold text-[#0F172A]">
+          <p className="text-xs font-medium text-[#64748B]">Resumable Lifecycle Tracker</p>
+          <h3 className="font-display mt-0.5 text-lg font-semibold text-[#0F172A]">
             StudioNet Transaction Queue ({transactions.length})
           </h3>
         </div>
@@ -91,16 +89,16 @@ export function TxTrackerPanel({
           {hasActive && (
             <button
               type="button"
-              className="inline-flex items-center gap-1.5 rounded-[3px] border border-[#CBD5E1] bg-white px-2.5 py-1 text-xs font-medium text-[#0F172A] hover:bg-[#F4F6F9]"
+              className="inline-flex items-center gap-1.5 rounded-md border border-[#CBD5E1] bg-white px-2.5 py-1.5 text-xs font-medium text-[#0F172A] hover:bg-[#F8FAFC]"
               onClick={onPollNow}
             >
-              <RefreshCw size={12} className="spin" />
-              <span>Poll Now (7s auto)</span>
+              <RefreshCw size={12} className="spin text-[#1D4ED8]" />
+              <span>Poll Now</span>
             </button>
           )}
           <button
             type="button"
-            className="inline-flex items-center gap-1.5 rounded-[3px] border border-[#CBD5E1] bg-white px-2.5 py-1 text-xs font-medium text-[#475569] hover:bg-[#F4F6F9]"
+            className="inline-flex items-center gap-1.5 rounded-md border border-[#CBD5E1] bg-white px-2.5 py-1.5 text-xs font-medium text-[#475569] hover:bg-[#F8FAFC] hover:text-[#0F172A]"
             onClick={onClearAll}
           >
             <Trash2 size={12} />
@@ -109,25 +107,20 @@ export function TxTrackerPanel({
         </div>
       </div>
 
-      <div className="flex flex-col gap-3">
+      <div className="divide-y divide-[#E2E8F0]">
         {transactions.map((tx) => {
           const meta = LIFECYCLE_LABELS[tx.lifecycle];
           const url = txExplorerUrl(tx.hash);
           return (
-            <div
-              key={tx.hash}
-              className="flex flex-col gap-2 rounded-[3px] border border-[#CBD5E1] bg-[#F4F6F9] p-3"
-            >
+            <div key={tx.hash} className="flex flex-col gap-2.5 px-5 py-4 sm:px-6">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="mono rounded-[2px] border border-blue-200 bg-blue-50 px-2 py-0.5 text-xs font-semibold text-[#2563EB]">
-                    {tx.method}
-                  </span>
+                <div className="flex flex-wrap items-center gap-2.5">
+                  <span className="mono text-xs font-semibold text-[#1D4ED8]">{tx.method}</span>
                   <span className="text-sm font-medium text-[#0F172A]">{tx.summary}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span
-                    className={`inline-flex items-center gap-1 rounded-[2px] border px-2 py-0.5 text-xs font-semibold ${meta.classes}`}
+                    className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${meta.classes}`}
                   >
                     {tx.lifecycle === 'finalized-success' && <CheckCircle2 size={12} />}
                     {tx.lifecycle === 'finalized-error' && <XCircle size={12} />}
@@ -139,7 +132,7 @@ export function TxTrackerPanel({
                   </span>
                   <button
                     type="button"
-                    className="rounded-[2px] p-1 text-[#475569] hover:bg-white hover:text-[#0F172A]"
+                    className="rounded p-1 text-[#64748B] hover:bg-[#F8FAFC] hover:text-[#0F172A]"
                     title="Remove from history"
                     onClick={() => onRemove(tx.hash)}
                   >
@@ -148,48 +141,33 @@ export function TxTrackerPanel({
                 </div>
               </div>
 
-              <div className="mono flex flex-wrap gap-1.5 text-[11px]">
-                <span
-                  className={`rounded-[2px] border px-2 py-0.5 ${
-                    meta.step >= 1
-                      ? 'border-emerald-700/30 bg-emerald-50 font-semibold text-emerald-900'
-                      : 'border-[#CBD5E1] bg-white text-[#475569]'
-                  }`}
-                >
+              <div className="mono flex flex-wrap items-center gap-2 text-[11px] text-[#64748B]">
+                <span className={meta.step >= 1 ? 'font-semibold text-emerald-800' : ''}>
                   1. submitted
                 </span>
-                <span
-                  className={`rounded-[2px] border px-2 py-0.5 ${
-                    meta.step >= 2
-                      ? 'border-emerald-700/30 bg-emerald-50 font-semibold text-emerald-900'
-                      : 'border-[#CBD5E1] bg-white text-[#475569]'
-                  }`}
-                >
+                <span>→</span>
+                <span className={meta.step >= 2 ? 'font-semibold text-emerald-800' : ''}>
                   2. pending
                 </span>
-                <span
-                  className={`rounded-[2px] border px-2 py-0.5 ${
-                    meta.step >= 3
-                      ? 'border-emerald-700/30 bg-emerald-50 font-semibold text-emerald-900'
-                      : 'border-[#CBD5E1] bg-white text-[#475569]'
-                  }`}
-                >
+                <span>→</span>
+                <span className={meta.step >= 3 ? 'font-semibold text-emerald-800' : ''}>
                   3. accepted (5)
                 </span>
+                <span>→</span>
                 <span
-                  className={`rounded-[2px] border px-2 py-0.5 ${
+                  className={
                     meta.step >= 4
                       ? tx.lifecycle === 'finalized-error'
-                        ? 'border-red-700/30 bg-red-50 font-semibold text-red-900'
-                        : 'border-emerald-700/30 bg-emerald-50 font-semibold text-emerald-900'
-                      : 'border-[#CBD5E1] bg-white text-[#475569]'
-                  }`}
+                        ? 'font-semibold text-red-800'
+                        : 'font-semibold text-emerald-800'
+                      : ''
+                  }
                 >
                   4. {tx.lifecycle === 'finalized-error' ? 'finalized-error' : 'finalized-success'}
                 </span>
               </div>
 
-              <div className="mono flex flex-wrap gap-4 text-xs text-[#475569]">
+              <div className="mono flex flex-wrap gap-4 text-xs text-[#64748B]">
                 <span>Tx: {shortHash(tx.hash, 12, 10)}</span>
                 {tx.rawStatus && <span>RPC Status: {tx.rawStatus}</span>}
                 {tx.rawResult && <span>Consensus: {tx.rawResult}</span>}
@@ -198,7 +176,7 @@ export function TxTrackerPanel({
                     href={url}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1 font-medium text-[#2563EB] hover:underline"
+                    className="inline-flex items-center gap-1 font-medium text-[#1D4ED8] hover:underline"
                   >
                     <span>Explorer</span>
                     <ExternalLink size={11} />
@@ -206,7 +184,7 @@ export function TxTrackerPanel({
                 )}
               </div>
               {tx.errorMessage && (
-                <p className="rounded-[2px] border border-red-700/30 bg-red-50 px-2.5 py-1 text-xs text-red-900">
+                <p className="border-l-2 border-red-500 bg-red-50/70 px-3 py-1.5 text-xs text-red-900">
                   Poll note: {tx.errorMessage}
                 </p>
               )}
