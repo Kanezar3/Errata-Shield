@@ -87,6 +87,7 @@ export async function createWalletClient(account: Address) {
   } catch {
     await ensureStudioNetChain();
   }
+  await client.initializeConsensusSmartContract();
   return client;
 }
 
@@ -320,4 +321,28 @@ export async function pollTransactionOnce(hash: Hex): Promise<{
   const client = createReadOnlyClient();
   const tx = await client.getTransaction({ hash: hash as TransactionHash });
   return mapGenLayerTxToLifecycle(tx as unknown as Record<string, unknown>);
+}
+
+export async function fetchLiveFirewallState(firewallAddress: string): Promise<{
+  citations: import('../types/firewall').CitationBondRecord[];
+  audits: import('../types/firewall').FirewallAuditRecord[];
+}> {
+  const client = createReadOnlyClient();
+  await client.initializeConsensusSmartContract();
+  const [citesRaw, auditsRaw] = await Promise.all([
+    client.readContract({
+      address: firewallAddress as Address,
+      functionName: 'list_citation_bonds',
+      args: [],
+    }),
+    client.readContract({
+      address: firewallAddress as Address,
+      functionName: 'list_audits',
+      args: [],
+    }),
+  ]);
+  return {
+    citations: JSON.parse(String(citesRaw)) as import('../types/firewall').CitationBondRecord[],
+    audits: JSON.parse(String(auditsRaw)) as import('../types/firewall').FirewallAuditRecord[],
+  };
 }

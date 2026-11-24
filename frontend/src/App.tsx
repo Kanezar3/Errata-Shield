@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import { BookMarked, ExternalLink, Shield, Wallet, X } from 'lucide-react';
+import { BookMarked, ExternalLink, GitBranch, Shield, Wallet, X } from 'lucide-react';
 import type { Address } from 'viem';
 import fallbackProof from './data/proof.json';
+import fallbackFirewallProof from './data/proof_v1.json';
+import { CitationFirewallPanel } from './components/CitationFirewallPanel';
 import { ProofInspector } from './components/ProofInspector';
 import { TxTrackerPanel } from './components/TxTrackerPanel';
 import { WalletDesk } from './components/WalletDesk';
@@ -15,8 +17,9 @@ import {
   shortHash,
 } from './lib/genlayer';
 import type { ErrataProofDocument, LiveChainSnapshot } from './types/proof';
+import type { FirewallProofDocument } from './types/firewall';
 
-type ActiveTab = 'inspector' | 'desk';
+type ActiveTab = 'inspector' | 'firewall' | 'desk';
 
 export function App() {
   const [proof, setProof] = useState<ErrataProofDocument>(
@@ -245,6 +248,22 @@ export function App() {
           <button
             type="button"
             className={`inline-flex h-full items-center gap-1.5 border-b-2 px-2.5 text-xs font-semibold transition-colors sm:px-3 sm:text-sm ${
+              activeTab === 'firewall'
+                ? 'border-[#1D4ED8] text-[#1D4ED8]'
+                : 'border-transparent text-[#475569] hover:text-[#0F172A]'
+            }`}
+            onClick={() => setActiveTab('firewall')}
+          >
+            <GitBranch size={14} className="shrink-0" />
+            <span className="whitespace-nowrap">Citation Firewall</span>
+            <span className="mono hidden rounded bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700 sm:inline">
+              v1
+            </span>
+          </button>
+
+          <button
+            type="button"
+            className={`inline-flex h-full items-center gap-1.5 border-b-2 px-2.5 text-xs font-semibold transition-colors sm:px-3 sm:text-sm ${
               activeTab === 'desk'
                 ? 'border-[#1D4ED8] text-[#1D4ED8]'
                 : 'border-transparent text-[#475569] hover:text-[#0F172A]'
@@ -283,6 +302,10 @@ export function App() {
             liveLoading={liveLoading}
             connectedAddress={connectedAddress}
             onRefreshLive={refreshLiveState}
+          />
+        ) : activeTab === 'firewall' ? (
+          <CitationFirewallPanel
+            proof={fallbackFirewallProof as unknown as FirewallProofDocument}
           />
         ) : (
           <WalletDesk

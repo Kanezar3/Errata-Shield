@@ -10,3 +10,7 @@ deploy/seed_state.json
 .env
 .env.local
 .DS_Store
+
+.secrets.v1.local.json
+deploy/seed_state_v1.json
+.venv_v1/

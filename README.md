@@ -5,9 +5,12 @@
 `Errata Shield` is a two-gate Intelligent Contract protocol (`ErrataShield`) deployed on GenLayer StudioNet (`Chain ID 61999`) that distinguishes **material scientific retractions or proof invalidations** from **cosmetic typographical corrigenda** and **unrelated/adversarial excerpts** over immutable public archives.
 
 - **Live App:** [`https://errata-shield.vercel.app`](https://errata-shield.vercel.app)
-- **Main Contract (`ErrataShield`)**: [`0x789cC30C52eb51B16B7092B1eaB73d73B15dCA3c`](https://explorer-studio.genlayer.com/address/0x789cC30C52eb51B16B7092B1eaB73d73B15dCA3c)
+- **Primary Contract (`ErrataShield` v0)**: [`0x789cC30C52eb51B16B7092B1eaB73d73B15dCA3c`](https://explorer-studio.genlayer.com/address/0x789cC30C52eb51B16B7092B1eaB73d73B15dCA3c)
+- **Milestone v1 Contract (`CitationFirewall`)**: [`0xBef0cD5F8cAc78b8883eca116A04138b3f1780C8`](https://explorer-studio.genlayer.com/address/0xBef0cD5F8cAc78b8883eca116A04138b3f1780C8)
 - **Probe Contract (`EvidenceProbe`)**: [`0xfCb0Ee3eDcEFDE1f979310602067083bC55Be1Ee`](https://explorer-studio.genlayer.com/address/0xfCb0Ee3eDcEFDE1f979310602067083bC55Be1Ee)
 - **Network**: GenLayer StudioNet (`https://studio.genlayer.com/api`, Chain ID `61999`)
+
+> **Milestone v1 — Citation Firewall:** Errata Shield now ships with [`contracts/citation_firewall.py`](contracts/citation_firewall.py) (`0xBef0...80C8`), a cross-contract retraction-contagion engine that reads live `ErrataShield` bond status via `gl.get_contract_at`, slashes downstream papers with `LOAD_BEARING_DEPENDENCY` on retracted findings, immunizes `INCIDENTAL_OR_CRITICAL_CITATION` papers (`IMMUNE_UPHELD`), and visualizes the live dependency graph in the **`Citation Firewall v1`** tab. See [`docs/MILESTONE_V1.md`](docs/MILESTONE_V1.md) and [`deploy/proof_v1.json`](deploy/proof_v1.json) (`14/14` finalized StudioNet txs; `npm run verify:proof:v1`).
 
 ---
 
